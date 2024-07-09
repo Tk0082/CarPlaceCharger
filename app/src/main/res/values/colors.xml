@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bluel">#FF88CAFF</color>
+    <color name="blue">#FF0083EC</color>
+    <color name="blued">#FF0068BB</color>
+    <color name="teal_200">#FF8AF1FF</color>
+    <color name="teal_300">#FF03CCE7</color>
+    <color name="teal_700">#FF02638F</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="graffit">#FF404040</color>
+    <color name="graffitl">#FF808080</color>
+    <color name="graffitd">#FF202020</color>
+    <color name="cardd">#FF7DFF80</color>
+    <color name="cardl">#FFC4FFC6</color>
+    <color name="grey">#FF202125</color>
+</resources>
