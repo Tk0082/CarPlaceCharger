@@ -90,7 +90,7 @@ fun MapsScreen(){
         Circle(
             center = posit,
             radius = 500.0,
-            strokeWidth = 1f,
+            strokeWidth = 2f,
             strokeColor = BackCardD,
             fillColor = BackCircle
         )

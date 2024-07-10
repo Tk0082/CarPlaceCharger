@@ -1,9 +1,15 @@
 package com.betrendmobile.carplacecharger
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,26 +24,37 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import com.betrendmobile.carplacecharger.data.DataProvider
 import com.betrendmobile.carplacecharger.ui.theme.Green50
 import com.betrendmobile.carplacecharger.ui.theme.Green80
 import com.betrendmobile.carplacecharger.ui.theme.PowerUpTheme
 import com.betrendmobile.carplacecharger.ui.theme.sourceProFontFamily
-import com.betrendmobile.carplacecharger.R
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var i: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +73,7 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier.fillMaxSize()
         ){
             Column {
+                CheckLocalPermission()
                 TopBar()
                 StationsContent()
             }
@@ -111,7 +129,60 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    // Permissão de Localização
+    @Composable
+    fun RequestLocalPermission(){
+        val context = LocalContext.current
+        var showDialog by remember{ mutableStateOf(true)}
+
+        // Abrir Página de Configurações do App
+        val openSettingsApp = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()){}
+
+        if(showDialog){
+            AlertDialog(
+                title = { Text(text = "Permitir Localização")},
+                text = { Text(text = "Este Aplicativo precisa de permissão de localização para funcionar corretamente.\nPor favor, conceda a permissão nas configurações.")},
+                onDismissRequest = {showDialog = false},
+                confirmButton = {
+                    Button(onClick = {
+                        i = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null))
+                        openSettingsApp.launch(i)
+                        showDialog = false
+                    }) {
+                        Text(text = "Abrir Configuração")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        showDialog = false
+                        finish()
+                    }) {
+                        Text(text = "Cancelar")
+                    }
+                }
+            )
+        }
+    }
+
+    // Checar Permissão de Localização
+    @Composable
+    fun CheckLocalPermission(){
+        val context = LocalContext.current
+        var permissionGranted by remember{ mutableStateOf(false) }
+        LaunchedEffect(Unit) {
+            permissionGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PermissionChecker.PERMISSION_GRANTED
+        }
+        if(!permissionGranted){
+            RequestLocalPermission()
+        } else {
+            val msg = ShowMessage(context, "Localização Permitida!")
+            i = Intent(this, MapsActivity::class.java)
+            msg.showToast()
+        }
+    }
+
     override fun onDestroy() {
+        finish()
         super.onDestroy()
     }
 
