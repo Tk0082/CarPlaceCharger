@@ -26,9 +26,9 @@ private val LightColorScheme = lightColorScheme(
     // Other default colors to override
     //background = Green100,
     //surface = Green50,
-    //onPrimary = Teal80,
-    //onSecondary = Teal100,
-    //onTertiary = Green50,
+    onPrimary = Green80,
+    onSecondary = Green50,
+    onTertiary = Green40,
     //onBackground = Graffit,
     //onSurface = Teal80,
 

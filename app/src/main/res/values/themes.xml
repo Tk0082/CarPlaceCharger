@@ -5,7 +5,9 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/greend</item>
-        <item name="colorOnPrimary">@color/cardl</item>
+        <item name="colorOnPrimary">@color/greenl</item>
+        <item name="statusBarBackground">@color/greend</item>
+        <item name="statusBarForeground">@color/greenl</item>
     </style>
 
     <style name="Theme.CarPlaceCharger.Popup" parent="Theme.CarPlaceCharger" />

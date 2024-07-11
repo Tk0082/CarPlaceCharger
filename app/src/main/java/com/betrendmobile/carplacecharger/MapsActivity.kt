@@ -1,5 +1,5 @@
 
-// Copyright 2024 Google LLC
+// Copyright 2024 - BeTrendMobileCreations CarPlace Charger
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,9 +15,12 @@
 
 package com.betrendmobile.carplacecharger
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -50,36 +53,59 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 
 class MapsActivity : ComponentActivity() {
 
     private lateinit var localCurrent: FusedLocationProviderClient
+    private lateinit var i: Intent
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val lat = intent.getDoubleExtra("lat", 0.0)
+        val long = intent.getDoubleExtra("long", 0.0)
+        val name = intent.getStringExtra("name")!!
+        val desc = intent.getStringExtra("desc")!!
+
         setContent {
-            MapsScreen()
+            window.statusBarColor = getColor(R.color.greend)
+            MapsScreen(name, desc, lat, long)
         }
+    }
+
+    override fun onDestroy() {
+        i = Intent(this, MainActivity::class.java)
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        i = Intent(this, MainActivity::class.java)
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        super.onPause()
     }
 }
 
 @Composable
-fun MapsScreen(){
+fun MapsScreen(name: String, desc: String, lat: Double, long: Double){
+
+    // Cores para formar o Gradient
     val colors = listOf(BackCardD, BackCardL)
+    // Brush Vertical do Gradient
     val brush = Brush.verticalGradient(colors)
 
-    // locationPermissionState = remember { Manifest.permission.ACCESS_FINE_LOCATION }
     val uiSettings by remember { mutableStateOf(MapUiSettings( zoomControlsEnabled = true)) }
     val properties by remember { mutableStateOf(MapProperties(mapType = MapType.NORMAL)) }
-    //var isMapLoaded by remember { mutableStateOf(false) }
 
-    val posit = LatLng(-16.7415469,-49.2769324) // (Y, X)
+    // Latitude e Longitude (Y, X)
+    val posit = LatLng(lat, long)
     val cameraPositionState = rememberCameraPositionState{
         position = CameraPosition.fromLatLngZoom(posit, 15.5f)
     }
-
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
@@ -94,10 +120,14 @@ fun MapsScreen(){
             strokeColor = BackCardD,
             fillColor = BackCircle
         )
-        MarkerInfoWindow(
+        Marker(
             position = posit,
-            //title = "Goiânia",
-            //snippet = "Eletroposto em Goiânia"
+            flat = true,
+            draggable = true,
+            zIndex = 1f
+        )
+        MarkerInfoWindow(
+            position = posit
         ){
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -112,8 +142,8 @@ fun MapsScreen(){
                     .border(1.dp, BackCardD)
                     .padding(20.dp)
             ){
-                Text("Goiânia", fontWeight = FontWeight.Bold, color = Graffitd)
-                Text("Eletroposto em Goiânia", fontWeight = FontWeight.Medium, color = Graffit)
+                Text(name, fontWeight = FontWeight.Bold, color = Graffitd)
+                Text(desc, fontWeight = FontWeight.Medium, color = Graffit)
             }
         }
     }

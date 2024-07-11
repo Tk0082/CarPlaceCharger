@@ -4,12 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -23,13 +25,16 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,19 +51,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
+import androidx.lifecycle.lifecycleScope
 import com.betrendmobile.carplacecharger.data.DataProvider
 import com.betrendmobile.carplacecharger.ui.theme.Green50
 import com.betrendmobile.carplacecharger.ui.theme.Green80
 import com.betrendmobile.carplacecharger.ui.theme.PowerUpTheme
 import com.betrendmobile.carplacecharger.ui.theme.sourceProFontFamily
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var i: Intent
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            window.statusBarColor = getColor(R.color.greend)
+            //window.navigationBarColor = getColor(R.color.greend)
             PowerUpTheme {
                 PowerAppView ()
             }
@@ -116,9 +126,21 @@ class MainActivity : ComponentActivity() {
     // Parametro passado para a ação de click levar à próxima activity
     @Composable
     fun StationsContent(){
+        // Guarda o estado da lista
+        val listState = rememberLazyListState()
+
+        DisposableEffect(Unit) {
+            lifecycleScope.launch {
+                scrollToTop(listState)
+            }
+
+            onDispose {  }
+        }
+
         // stations recebe o DataProvider com a lista
         val stations = remember { DataProvider.stationList }
         LazyColumn (
+            state = listState,
             contentPadding = PaddingValues(vertical = 5.dp, horizontal = 8.dp)
         ){
             items(
@@ -127,6 +149,10 @@ class MainActivity : ComponentActivity() {
                 StaionListItem(station = it)
             }
         }
+    }
+
+    private suspend fun scrollToTop(listState: LazyListState){
+        listState.scrollToItem(0)
     }
 
     // Permissão de Localização
@@ -184,13 +210,5 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         finish()
         super.onDestroy()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 }

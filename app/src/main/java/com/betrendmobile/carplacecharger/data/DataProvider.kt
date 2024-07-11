@@ -7,16 +7,16 @@ object DataProvider {
         Station(
             id = 1,
             img = R.drawable.banner,
-            latd = -16.7412272,
-            long = -49.3097619,
+            latd = -16.7415469,
+            long = -49.2769324,
             name = "Eletroposto Buriti Shopping",
             desc = "Posto para carros elétricos no Shopping Buriti(Parque Amazônia)"
         ),
         Station(
             id = 2,
             img = R.drawable.banner,
-            latd = -16.7058857,
-            long = -49.2697427,
+            latd = -16.7028136,
+            long = -49.2668138,
             name = "Eletroposto M Motors",
             desc = "Posto para carros elétricos M Motors"
         ),

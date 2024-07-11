@@ -141,8 +141,13 @@ fun StaionListItem(station: Station){
                             Button(
                                 onClick = {
                                     // Quando o item é expandido, clicando no Button, muda para a Tela do Mapa
-                                    val i = Intent(context, MapsActivity::class.java)
-                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    val i = Intent(context, MapsActivity::class.java).apply {
+                                        setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        putExtra("name", station.name)
+                                        putExtra("desc", station.desc)
+                                        putExtra("lat", station.latd)
+                                        putExtra("long", station.long)
+                                    }
                                     context.startActivity(i)
                                 },
                                 colors = ButtonDefaults.buttonColors(Green50),
