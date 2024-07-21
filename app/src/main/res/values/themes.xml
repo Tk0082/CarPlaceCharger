@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Theme.CarPlaceCharger" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimary">@color/greend</item>
-        <item name="colorOnPrimary">@color/greenl</item>
-        <item name="statusBarBackground">@color/greend</item>
-        <item name="statusBarForeground">@color/greenl</item>
-    </style>
+    <style name="Theme.CarPlaceCharger" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.CarPlaceCharger.Popup" parent="Theme.CarPlaceCharger" />
-    <!-- Base application theme. -->
-    <style name="Base.Theme.CarPlaceCharger" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
 </resources>

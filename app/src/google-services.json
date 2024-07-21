@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "333287699657",
+    "project_id": "carplacecharger-974fc",
+    "storage_bucket": "carplacecharger-974fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333287699657:android:d1f08d89cb9a42d92b8918",
+        "android_client_info": {
+          "package_name": "com.beTrend.CarPlaceCharger.CarPlaceCharger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXqVCSgDNXT0ItdSWw8zoXy_3yP62LV-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
