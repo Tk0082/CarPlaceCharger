@@ -37,16 +37,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.beTrend.CarPlaceCharger.ui.theme.BackCardD
 import com.beTrend.CarPlaceCharger.ui.theme.BackCardL
+import com.beTrend.CarPlaceCharger.ui.theme.BlueAppD
+import com.beTrend.CarPlaceCharger.ui.theme.BlueAppL
 import com.beTrend.CarPlaceCharger.ui.theme.Graffit
-import com.beTrend.CarPlaceCharger.ui.theme.Green50
 import com.beTrend.CarPlaceCharger.ui.theme.sourceProFontFamily
-import com.google.android.gms.maps.MapsInitializer
 
 
 // Modificador de Item de Da Lista
@@ -91,9 +90,7 @@ fun StationListItem(station: Station) {
                     expanded.value = !expanded.value
                 },
         ) {
-            Row(
-                //Modifier.clickable { navigateToProfile(station) }
-            ) {
+            Row{
                 StationImage(station = station)         // Imagem do card
                 Spacer(modifier = Modifier.width(5.dp))
                 Column(
@@ -102,7 +99,7 @@ fun StationListItem(station: Station) {
                         .padding(20.dp)
                 ) {
                     Text(
-                        color = Green50,
+                        color = BlueAppD,
                         text = station.name,
                         style = TextStyle(
                             fontSize = 18.sp,
@@ -118,9 +115,6 @@ fun StationListItem(station: Station) {
                 Column(
                     modifier = Modifier
                         .padding(bottom = extraPadding.coerceAtLeast(0.dp))
-                        .clickable {
-
-                        }
                 ) {
                     Column(
                         modifier = Modifier
@@ -151,7 +145,7 @@ fun StationListItem(station: Station) {
                                     }
                                     context.startActivity(i)
                                 },
-                                colors = ButtonDefaults.buttonColors(Green50),
+                                colors = ButtonDefaults.buttonColors(BlueAppD),
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier
                                     .padding(3.dp)
@@ -159,6 +153,7 @@ fun StationListItem(station: Station) {
                             ) {
                                 Text(
                                     text = "Mapa",
+                                    color = BlueAppL,
                                     style = TextStyle(
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.SemiBold,

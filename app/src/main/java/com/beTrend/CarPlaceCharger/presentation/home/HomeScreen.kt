@@ -1,9 +1,26 @@
+// Copyright 2024 - BeTrendMobileCreations CarPlace Charger
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.beTrend.CarPlaceCharger.presentation.home
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,24 +36,18 @@ import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowUpward
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
-import androidx.compose.material.icons.outlined.FilterAlt
-import androidx.compose.material.icons.outlined.North
-import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Tag
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.sharp.MyLocation
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberBottomSheetScaffoldState
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
@@ -53,20 +64,23 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beTrend.CarPlaceCharger.CarPlaceCharger.R
-import com.beTrendM.CarPlaceCharger.components.LocationUpdates
-import com.beTrendM.CarPlaceCharger.components.SmallSpacer
-import com.beTrendM.CarPlaceCharger.components.UserListItem
-import com.beTrendM.CarPlaceCharger.core.Strings.LOG_TAG
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.bitmapDescriptorFromVector
-import com.beTrendM.CarPlaceCharger.domain.model.Passenger
-import com.beTrendM.CarPlaceCharger.domain.model.SearchFilters
-import com.beTrendM.CarPlaceCharger.domain.model.UserType
-import com.beTrendM.CarPlaceCharger.presentation.home.HomeViewModel
+import com.beTrend.CarPlaceCharger.components.LocationUpdates
+import com.beTrend.CarPlaceCharger.components.SmallSpacer
+import com.beTrend.CarPlaceCharger.components.UserListItem
+import com.beTrend.CarPlaceCharger.core.Strings.LOG_TAG
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.bitmapDescriptorFromVector
+import com.beTrend.CarPlaceCharger.domain.model.Passenger
+import com.beTrend.CarPlaceCharger.domain.model.SearchFilters
+import com.beTrend.CarPlaceCharger.domain.model.UserType
+import com.beTrend.CarPlaceCharger.ui.theme.BackCardD
+import com.beTrend.CarPlaceCharger.ui.theme.BackCircle
+import com.beTrend.CarPlaceCharger.ui.theme.BlueApp
+import com.beTrend.CarPlaceCharger.ui.theme.BlueAppBackL
+import com.beTrend.CarPlaceCharger.ui.theme.BlueAppL
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -79,12 +93,10 @@ import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.MapsComposeExperimentalApi
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
-import java.sql.Driver
 
 @SuppressLint("MissingPermission")
 @OptIn(
@@ -106,11 +118,11 @@ fun HomeScreen(
         mutableStateOf<Location?>(null)
     }
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+    /*val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(
             initialValue = BottomSheetValue.Expanded
         )
-    )
+    )*/
 
     var query by rememberSaveable { mutableStateOf("") }
     val radiusRange = 0F..1000F
@@ -167,35 +179,60 @@ fun HomeScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .padding(padding)
+                .background(BlueAppL),
             contentAlignment = Alignment.TopCenter
         ) {
+            val bottomSheetScaffoldState =  rememberBottomSheetScaffoldState(
+                bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
+            )
             BottomSheetScaffold(
-                sheetBackgroundColor = MaterialTheme.colorScheme.background,
+                sheetBackgroundColor = BlueAppL,
+                scaffoldState = bottomSheetScaffoldState,
                 sheetContent = {
+                    var active by rememberSaveable { mutableStateOf(false) }
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable(
+                                onClick = {
+                                    scope.launch {
+                                        if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
+                                            bottomSheetScaffoldState.bottomSheetState.expand()
+                                        } else {
+                                            bottomSheetScaffoldState.bottomSheetState.collapse()
+                                        }
+                                    }
+                                })
                     ) {
-                        var active by rememberSaveable { mutableStateOf(false) }
-
                         Icon(
                             imageVector = when (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
                                 true -> Icons.Outlined.ExpandMore
                                 false -> Icons.Outlined.ExpandLess
                             },
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = BlueApp
                         )
                         Row {
                             Icon(
                                 Icons.Outlined.Tag,
-                                contentDescription = null
+                                modifier = Modifier
+                                    .size(18.dp, 18.dp)
+                                    .align(Alignment.CenterVertically),
+                                contentDescription = null,
+                                tint = BlueApp
                             )
                             SmallSpacer()
-                            Text("Slide para cima")
+                            if(bottomSheetScaffoldState.bottomSheetState.isExpanded){
+                                Text("Fechar Pesquisa", color = BlueApp)
+                            } else {
+                                Text("Abrir Pesquisa", color = BlueApp)
+                            }
                         }
                         SmallSpacer()
                         DockedSearchBar(
+                            modifier = Modifier.padding(0.dp, 5.dp, 0.dp, 10.dp),
                             active = active,
                             onActiveChange = { active = it },
                             onQueryChange = {
@@ -208,17 +245,25 @@ fun HomeScreen(
                             },
                             onSearch = { active = false },
                             query = query,
-                            placeholder = { Text("Buscar") },
+                            placeholder = { Text("Buscar", color = BackCardD) },
                             leadingIcon = {
                                 Icon(
                                     Icons.Rounded.Search,
+                                    tint = BlueApp,
                                     contentDescription = null
                                 )
                             },
+                            colors = SearchBarDefaults.colors(
+                                containerColor = BlueAppBackL,
+                                dividerColor = BlueApp,
+                                inputFieldColors = androidx.compose.material3.TextFieldDefaults.colors(
+                                    focusedTextColor = BlueApp
+                                )
+                            )
                         ) {
                             LazyColumn(
                                 modifier = Modifier
-                                    .fillMaxSize()
+                                    .fillMaxWidth()
                                     .padding(padding)
                             ) {
                                 items(usersOnMap.take(3)) { user ->
@@ -236,15 +281,14 @@ fun HomeScreen(
                             }
                         }
                         SmallSpacer()
-                        Text("Raio de alcance")
-                        SmallSpacer()
+                        Text("Raio de alcance", color = BlueApp)
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(text = "${radiusRange.start.toInt()} m")
-                            Text(text = "${radiusRange.endInclusive.toInt()} m")
+                            Text(text = "${radiusRange.start.toInt()} m", color = BlueApp)
+                            Text(text = "${radiusRange.endInclusive.toInt()} m", color = BlueApp)
                         }
 
                         Slider(
@@ -261,7 +305,7 @@ fun HomeScreen(
                             valueRange = radiusRange,
                             steps = 20,
                         )
-                        Text(text = "$radius m")
+                        Text(text = "$radius m", color = BlueApp)
 
                         if (currentUser?.userType == UserType.Pessoal) {
                             Slider(
@@ -277,12 +321,11 @@ fun HomeScreen(
                                 valueRange = 1F..5F,
                                 steps = 5,
                             )
-                            Text(text = "$rating stars")
+                            Text(text = "$rating stars", color = BlueApp)
                         }
                     }
 //                    }
-                },
-                scaffoldState = bottomSheetScaffoldState
+                }
             ) {
                 Box(
                     modifier = Modifier
@@ -290,7 +333,6 @@ fun HomeScreen(
                         .padding(bottom = 0.dp)
                 ) {
                     if (locationPermissionState.allPermissionsGranted) {
-
                         GoogleMap(
                             modifier = Modifier.fillMaxSize(),
                             cameraPositionState = cameraPositionState,
@@ -309,8 +351,9 @@ fun HomeScreen(
                                         currentLocation!!.latitude,
                                         currentLocation!!.longitude
                                     ),
-                                    strokeWidth = 0.0f,
-                                    fillColor = Color.Blue.copy(alpha = 0.1f),
+                                    strokeWidth = 2f,
+                                    strokeColor = BackCardD,
+                                    fillColor = BackCircle,
                                     visible = true,
                                     radius = radius.toDouble()
                                 )
@@ -327,7 +370,7 @@ fun HomeScreen(
                                         icon = when (user.userType) {
                                             UserType.Pessoal -> bitmapDescriptorFromVector(
                                                 context,
-                                                R.drawable.baseline_person_pin_circle_36
+                                                R.mipmap.ic_pin_1 //R.drawable.baseline_person_pin_circle_36
                                             )
                                         },
                                         onClick = {
@@ -381,21 +424,15 @@ fun HomeScreen(
                                 Icon(
                                     modifier = Modifier.size(24.dp),
                                     imageVector = Icons.Sharp.MyLocation,
-                                    contentDescription = "Location"
+                                    contentDescription = "Location",
+                                    tint = BlueApp
                                 )
                             }
                         )
                     }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = 92.dp, start = 32.dp)
-                    ) {
-                    }
                 }
             }
         }
-    },
-    )
+    })
 }
 

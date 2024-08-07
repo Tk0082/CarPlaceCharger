@@ -1,11 +1,11 @@
-package com.beTrendM.CarPlaceCharger.presentation.sign_up.components
+package com.beTrend.CarPlaceCharger.presentation.sign_up.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.beTrendM.CarPlaceCharger.components.ProgressBar
-import com.beTrendM.CarPlaceCharger.domain.model.Response
-import com.beTrendM.CarPlaceCharger.presentation.sign_up.SignUpViewModel
+import com.beTrend.CarPlaceCharger.components.ProgressBar
+import com.beTrend.CarPlaceCharger.domain.model.Response
+import com.beTrend.CarPlaceCharger.presentation.sign_up.SignUpViewModel
 
 @Composable
 fun SignUp(

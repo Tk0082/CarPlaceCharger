@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.beTrendM.CarPlaceCharger.domain.model.User
+import com.beTrend.CarPlaceCharger.domain.model.User
 
 @Composable
 fun UserListItem(user: User, title:String, subtitle:String, imageSize: Dp = 58.dp) {

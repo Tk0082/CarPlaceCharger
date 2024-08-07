@@ -1,7 +1,7 @@
-package com.beTrendM.CarPlaceCharger.domain.module
+package com.beTrend.CarPlaceCharger.domain.module
 
-import com.beTrendM.CarPlaceCharger.domain.repository.UserRepository
-import com.beTrendM.CarPlaceCharger.domain.repository.UserRepositoryImpl
+import com.beTrend.CarPlaceCharger.domain.repository.UserRepository
+import com.beTrend.CarPlaceCharger.domain.repository.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

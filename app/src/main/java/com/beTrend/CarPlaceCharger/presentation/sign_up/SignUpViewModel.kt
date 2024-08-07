@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.sign_up
+package com.beTrend.CarPlaceCharger.presentation.sign_up
 
 import android.net.Uri
 import android.util.Log
@@ -7,14 +7,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.beTrendM.CarPlaceCharger.core.Strings.LOG_TAG
-import com.beTrendM.CarPlaceCharger.domain.model.Response
-import com.beTrendM.CarPlaceCharger.domain.model.Passenger
-import com.beTrendM.CarPlaceCharger.domain.model.UserType
-import com.beTrendM.CarPlaceCharger.domain.repository.AuthRepository
-import com.beTrendM.CarPlaceCharger.domain.repository.SendEmailVerificationResponse
-import com.beTrendM.CarPlaceCharger.domain.repository.SignUpResponse
-import com.beTrendM.CarPlaceCharger.domain.repository.UserRepository
+import com.beTrend.CarPlaceCharger.core.Strings.LOG_TAG
+import com.beTrend.CarPlaceCharger.domain.model.Response
+import com.beTrend.CarPlaceCharger.domain.model.Passenger
+import com.beTrend.CarPlaceCharger.domain.model.UserType
+import com.beTrend.CarPlaceCharger.domain.repository.AuthRepository
+import com.beTrend.CarPlaceCharger.domain.repository.SendEmailVerificationResponse
+import com.beTrend.CarPlaceCharger.domain.repository.SignUpResponse
+import com.beTrend.CarPlaceCharger.domain.repository.UserRepository
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.lifecycle.HiltViewModel

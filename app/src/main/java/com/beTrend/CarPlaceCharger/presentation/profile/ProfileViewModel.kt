@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.profile
+package com.beTrend.CarPlaceCharger.presentation.profile
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -6,14 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.beTrendM.CarPlaceCharger.core.Strings.LOG_TAG
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.snapshotToUser
-import com.beTrendM.CarPlaceCharger.domain.model.User
-import com.beTrendM.CarPlaceCharger.domain.model.Response
-import com.beTrendM.CarPlaceCharger.domain.repository.AuthRepository
-import com.beTrendM.CarPlaceCharger.domain.repository.ReloadUserResponse
-import com.beTrendM.CarPlaceCharger.domain.repository.RevokeAccessResponse
-import com.beTrendM.CarPlaceCharger.domain.repository.UserRepository
+import com.beTrend.CarPlaceCharger.core.Strings.LOG_TAG
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.snapshotToUser
+import com.beTrend.CarPlaceCharger.domain.model.User
+import com.beTrend.CarPlaceCharger.domain.model.Response
+import com.beTrend.CarPlaceCharger.domain.repository.AuthRepository
+import com.beTrend.CarPlaceCharger.domain.repository.ReloadUserResponse
+import com.beTrend.CarPlaceCharger.domain.repository.RevokeAccessResponse
+import com.beTrend.CarPlaceCharger.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

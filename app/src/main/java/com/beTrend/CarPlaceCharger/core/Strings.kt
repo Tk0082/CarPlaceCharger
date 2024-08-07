@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.core
+package com.beTrend.CarPlaceCharger.core
 
 /*
 Tela de Inscreva-se, Crie sua conta!

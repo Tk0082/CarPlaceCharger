@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.navigation
+package com.beTrend.CarPlaceCharger.navigation
 
 sealed class Screen(val route: String) {
     object SignInScreen: Screen("Logar")

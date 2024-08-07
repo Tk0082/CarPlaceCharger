@@ -1,4 +1,4 @@
-package com.betrendmobile.carplacecharger
+package com.beTrend.CarPlaceCharger.presentation.station
 
 import android.content.Context
 import android.widget.Toast

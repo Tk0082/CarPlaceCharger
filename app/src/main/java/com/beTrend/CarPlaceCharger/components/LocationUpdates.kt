@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import android.Manifest
 import android.os.Looper

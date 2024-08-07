@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -14,7 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import com.beTrendM.CarPlaceCharger.core.Strings.PASSWORD_LABEL
+import com.beTrend.CarPlaceCharger.core.Strings.PASSWORD_LABEL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

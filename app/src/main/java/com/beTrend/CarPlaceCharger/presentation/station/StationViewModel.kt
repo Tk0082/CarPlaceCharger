@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.leaderboard
+package com.beTrend.CarPlaceCharger.presentation.leaderboard
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beTrend.CarPlaceCharger.presentation.station.DataProvider
 import com.beTrend.CarPlaceCharger.presentation.station.Station
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.snapshotToUser
-import com.beTrendM.CarPlaceCharger.domain.model.User
-import com.beTrendM.CarPlaceCharger.domain.repository.UserRepository
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.snapshotToUser
+import com.beTrend.CarPlaceCharger.domain.model.User
+import com.beTrend.CarPlaceCharger.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

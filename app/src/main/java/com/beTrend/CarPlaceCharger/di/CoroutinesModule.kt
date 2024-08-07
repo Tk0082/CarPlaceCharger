@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.di
+package com.beTrend.CarPlaceCharger.di
 
 import dagger.Module
 import dagger.Provides

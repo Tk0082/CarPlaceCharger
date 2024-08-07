@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

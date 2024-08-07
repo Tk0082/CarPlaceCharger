@@ -2,12 +2,10 @@ package com.beTrend.CarPlaceCharger
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EvStation
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Leaderboard
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.beTrendM.CarPlaceCharger.navigation.Screen
+import com.beTrend.CarPlaceCharger.navigation.Screen
 
 sealed class BottomBarScreen(
     val route: String,

@@ -1,6 +1,6 @@
-package com.beTrendM.CarPlaceCharger.domain.repository
+package com.beTrend.CarPlaceCharger.domain.repository
 
-import com.beTrendM.CarPlaceCharger.domain.model.User
+import com.beTrend.CarPlaceCharger.domain.model.User
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject

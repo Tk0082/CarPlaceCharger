@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.home.components
+package com.beTrend.CarPlaceCharger.presentation.home.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.beTrendM.CarPlaceCharger.components.UserListItem
-import com.beTrendM.CarPlaceCharger.domain.model.Passenger
+import com.beTrend.CarPlaceCharger.components.UserListItem
+import com.beTrend.CarPlaceCharger.domain.model.Passenger
 
 @Composable
  fun PassengerDialog(

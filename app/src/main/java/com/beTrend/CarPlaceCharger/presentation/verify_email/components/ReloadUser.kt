@@ -1,11 +1,11 @@
-package com.beTrendM.CarPlaceCharger.presentation.verify_email
+package com.beTrend.CarPlaceCharger.presentation.verify_email
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.beTrendM.CarPlaceCharger.components.ProgressBar
-import com.beTrendM.CarPlaceCharger.domain.model.Response
-import com.beTrendM.CarPlaceCharger.presentation.profile.ProfileViewModel
+import com.beTrend.CarPlaceCharger.components.ProgressBar
+import com.beTrend.CarPlaceCharger.domain.model.Response
+import com.beTrend.CarPlaceCharger.presentation.profile.ProfileViewModel
 
 @Composable
 fun ReloadUser(

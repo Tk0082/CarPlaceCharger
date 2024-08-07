@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.navigation
+package com.beTrend.CarPlaceCharger.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import com.beTrend.CarPlaceCharger.presentation.home.HomeScreen
+import com.beTrend.CarPlaceCharger.presentation.profile.ProfileScreen
+import com.beTrend.CarPlaceCharger.presentation.sign_in.SignInScreen
+import com.beTrend.CarPlaceCharger.presentation.sign_up.SignUpScreen
 import com.beTrend.CarPlaceCharger.presentation.station.StationScreen
-import com.beTrendM.CarPlaceCharger.presentation.profile.ProfileScreen
-import com.beTrendM.CarPlaceCharger.presentation.sign_in.SignInScreen
-import com.beTrendM.CarPlaceCharger.presentation.sign_up.SignUpScreen
 import com.beTrend.CarPlaceCharger.presentation.verify_email.VerifyEmailScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable

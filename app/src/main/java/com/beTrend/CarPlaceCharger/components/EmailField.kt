@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,7 +10,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import com.beTrendM.CarPlaceCharger.core.Strings.EMAIL_LABEL
+import com.beTrend.CarPlaceCharger.core.Strings.EMAIL_LABEL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

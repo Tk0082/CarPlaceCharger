@@ -1,6 +1,6 @@
-package com.beTrendM.CarPlaceCharger.domain.repository
+package com.beTrend.CarPlaceCharger.domain.repository
 
-import com.beTrendM.CarPlaceCharger.domain.model.Response
+import com.beTrend.CarPlaceCharger.domain.model.Response
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose

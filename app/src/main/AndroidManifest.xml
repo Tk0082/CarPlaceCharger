@@ -5,6 +5,7 @@
     <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -13,9 +14,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ico_energy"
+        android:icon="@mipmap/ic_carplace"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ico_energy"
+        android:roundIcon="@mipmap/ic_carplace"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarPlaceCharger"
         tools:targetApi="31">

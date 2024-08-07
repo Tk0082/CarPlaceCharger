@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.domain.model
+package com.beTrend.CarPlaceCharger.domain.model
 
 sealed class Response<out T> {
     object None: Response<Nothing>()

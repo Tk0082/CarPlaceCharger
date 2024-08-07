@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.core
+package com.beTrend.CarPlaceCharger.core
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,8 +7,8 @@ import android.location.Location.distanceBetween
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.core.content.ContextCompat
-import com.beTrendM.CarPlaceCharger.domain.model.Passenger
-import com.beTrendM.CarPlaceCharger.domain.model.UserType
+import com.beTrend.CarPlaceCharger.domain.model.Passenger
+import com.beTrend.CarPlaceCharger.domain.model.UserType
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.firebase.database.DataSnapshot

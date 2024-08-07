@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.sign_in.components
+package com.beTrend.CarPlaceCharger.presentation.sign_in.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,11 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.sp
-import com.beTrendM.CarPlaceCharger.components.EmailField
-import com.beTrendM.CarPlaceCharger.components.PasswordField
-import com.beTrendM.CarPlaceCharger.components.SmallSpacer
-import com.beTrendM.CarPlaceCharger.core.Strings.NO_ACCOUNT
-import com.beTrendM.CarPlaceCharger.core.Strings.SIGN_IN_BUTTON
+import com.beTrend.CarPlaceCharger.components.EmailField
+import com.beTrend.CarPlaceCharger.components.PasswordField
+import com.beTrend.CarPlaceCharger.components.SmallSpacer
+import com.beTrend.CarPlaceCharger.core.Strings.NO_ACCOUNT
+import com.beTrend.CarPlaceCharger.core.Strings.SIGN_IN_BUTTON
 
 @Composable
 @ExperimentalComposeUiApi

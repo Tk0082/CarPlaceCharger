@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.domain.model
+package com.beTrend.CarPlaceCharger.domain.model
 //TIPO DE CONTA
 enum class UserType {
     Pessoal

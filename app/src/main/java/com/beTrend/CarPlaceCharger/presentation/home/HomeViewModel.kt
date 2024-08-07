@@ -1,14 +1,14 @@
-package com.beTrendM.CarPlaceCharger.presentation.home
+package com.beTrend.CarPlaceCharger.presentation.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.beTrendM.CarPlaceCharger.core.Strings.LOG_TAG
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.snapshotToUser
-import com.beTrendM.CarPlaceCharger.domain.model.SearchFilters
-import com.beTrendM.CarPlaceCharger.domain.model.User
-import com.beTrendM.CarPlaceCharger.domain.repository.AuthRepository
-import com.beTrendM.CarPlaceCharger.domain.repository.UserRepository
+import com.beTrend.CarPlaceCharger.core.Strings.LOG_TAG
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.snapshotToUser
+import com.beTrend.CarPlaceCharger.domain.model.SearchFilters
+import com.beTrend.CarPlaceCharger.domain.model.User
+import com.beTrend.CarPlaceCharger.domain.repository.AuthRepository
+import com.beTrend.CarPlaceCharger.domain.repository.UserRepository
 import com.google.android.gms.location.LocationResult
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

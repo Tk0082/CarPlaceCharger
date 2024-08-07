@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.verify_email
+package com.beTrend.CarPlaceCharger.presentation.verify_email
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.beTrendM.CarPlaceCharger.components.SmallSpacer
-import com.beTrendM.CarPlaceCharger.core.Strings.ALREADY_VERIFIED
-import com.beTrendM.CarPlaceCharger.core.Strings.SPAM_EMAIL
+import com.beTrend.CarPlaceCharger.components.SmallSpacer
+import com.beTrend.CarPlaceCharger.core.Strings.ALREADY_VERIFIED
+import com.beTrend.CarPlaceCharger.core.Strings.SPAM_EMAIL
 
 @Composable
 fun VerifyEmailContent(

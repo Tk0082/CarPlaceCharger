@@ -1,3 +1,5 @@
+package com.beTrend.CarPlaceCharger.components
+
 import android.Manifest
 import android.content.ContentValues
 import android.content.Context
@@ -21,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.showToast
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.showToast
 
 @Composable
 fun CameraCapture(onPhotoCaptured: (Uri) -> Unit) {

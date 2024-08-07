@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.presentation.sign_in
+package com.beTrend.CarPlaceCharger.presentation.sign_in
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -6,10 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.showToast
-import com.beTrendM.CarPlaceCharger.presentation.sign_in.components.SignIn
-import com.beTrendM.CarPlaceCharger.presentation.sign_in.components.SignInContent
-import com.beTrendM.CarPlaceCharger.presentation.sign_in.components.SignInTopBar
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.showToast
+import com.beTrend.CarPlaceCharger.presentation.sign_in.SignInViewModel
+import com.beTrend.CarPlaceCharger.presentation.sign_in.components.SignIn
+import com.beTrend.CarPlaceCharger.presentation.sign_in.components.SignInContent
+import com.beTrend.CarPlaceCharger.presentation.sign_in.components.SignInTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

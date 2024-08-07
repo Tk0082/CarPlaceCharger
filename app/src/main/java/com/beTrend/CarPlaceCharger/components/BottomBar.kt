@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
@@ -13,6 +13,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.beTrend.CarPlaceCharger.BottomBarScreen
+import com.beTrend.CarPlaceCharger.ui.theme.BlueApp
+import com.beTrend.CarPlaceCharger.ui.theme.BlueAppM
 
 @Composable
 fun BottomBar(navController: NavHostController) {
@@ -26,7 +28,9 @@ fun BottomBar(navController: NavHostController) {
 
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
     if (bottomBarDestination) {
-        NavigationBar {
+        NavigationBar(
+            containerColor = BlueAppM
+        ) {
             screens.forEach { screen ->
                 AddItem(
                     screen = screen,
@@ -46,12 +50,13 @@ fun RowScope.AddItem(
 ) {
     NavigationBarItem(
         label = {
-            Text(text = screen.title)
+            Text(text = screen.title, color = BlueApp)
         },
         icon = {
             Icon(
                 imageVector = screen.icon,
-                contentDescription = "Navigation Icon"
+                contentDescription = "Navigation Icon",
+                tint = BlueApp
             )
         },
         selected = currentDestination?.hierarchy?.any {

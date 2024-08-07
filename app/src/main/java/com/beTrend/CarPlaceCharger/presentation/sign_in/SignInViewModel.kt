@@ -1,13 +1,13 @@
-package com.beTrendM.CarPlaceCharger.presentation.sign_in
+package com.beTrend.CarPlaceCharger.presentation.sign_in
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.beTrendM.CarPlaceCharger.domain.model.Response
-import com.beTrendM.CarPlaceCharger.domain.repository.AuthRepository
-import com.beTrendM.CarPlaceCharger.domain.repository.SignInResponse
+import com.beTrend.CarPlaceCharger.domain.model.Response
+import com.beTrend.CarPlaceCharger.domain.repository.AuthRepository
+import com.beTrend.CarPlaceCharger.domain.repository.SignInResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

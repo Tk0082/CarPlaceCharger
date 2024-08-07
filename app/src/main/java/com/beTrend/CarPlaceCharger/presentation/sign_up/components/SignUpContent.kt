@@ -1,6 +1,5 @@
-package com.beTrendM.CarPlaceCharger.presentation.sign_up.components
+package com.beTrend.CarPlaceCharger.presentation.sign_up.components
 
-import CameraCapture
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,14 +26,15 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.sp
-import com.beTrendM.CarPlaceCharger.components.EmailField
-import com.beTrendM.CarPlaceCharger.components.PasswordField
-import com.beTrendM.CarPlaceCharger.components.SmallSpacer
-import com.beTrendM.CarPlaceCharger.components.TextField
-import com.beTrendM.CarPlaceCharger.core.Strings.ALREADY_USER
-import com.beTrendM.CarPlaceCharger.core.Strings.SIGN_UP_BUTTON
-import com.beTrendM.CarPlaceCharger.core.Utils.Companion.showToast
-import com.beTrendM.CarPlaceCharger.domain.model.UserType
+import com.beTrend.CarPlaceCharger.components.CameraCapture
+import com.beTrend.CarPlaceCharger.components.EmailField
+import com.beTrend.CarPlaceCharger.components.PasswordField
+import com.beTrend.CarPlaceCharger.components.SmallSpacer
+import com.beTrend.CarPlaceCharger.components.TextField
+import com.beTrend.CarPlaceCharger.core.Strings.ALREADY_USER
+import com.beTrend.CarPlaceCharger.core.Strings.SIGN_UP_BUTTON
+import com.beTrend.CarPlaceCharger.core.Utils.Companion.showToast
+import com.beTrend.CarPlaceCharger.domain.model.UserType
 
 @Composable
 @ExperimentalComposeUiApi

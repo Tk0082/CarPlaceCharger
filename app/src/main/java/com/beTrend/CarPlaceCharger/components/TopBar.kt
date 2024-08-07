@@ -1,4 +1,4 @@
-package com.beTrendM.CarPlaceCharger.components
+package com.beTrend.CarPlaceCharger.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.beTrendM.CarPlaceCharger.core.Strings.SIGN_OUT_ITEM
+import com.beTrend.CarPlaceCharger.core.Strings.SIGN_OUT_ITEM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

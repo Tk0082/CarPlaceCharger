@@ -8,5 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="greend">#FF1D381E</color>
+    <color name="blueapp">#FF00668B</color>
+    <color name="blueappl">#FFF2FBFF</color>
+    <color name="blueappd">#FF003648</color>
+    <color name="blueappm">#FFDEEFF5</color>
 
 </resources>
