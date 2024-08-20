@@ -24,6 +24,7 @@
             android:name="com.beTrend.CarPlaceCharger.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
             android:theme="@style/Theme.CarPlaceCharger">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +33,7 @@
         </activity>
         <activity
             android:name="com.beTrend.CarPlaceCharger.presentation.station.MapsActivity"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
             android:exported="true" />
 
         <meta-data

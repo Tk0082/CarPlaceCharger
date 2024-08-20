@@ -60,9 +60,11 @@ fun ProfileScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val user by viewModel.user.collectAsState()
+    val conectores = remember { DataConector.conectorList }
+    val conector = listOf(conectores)
+    var selectedOption by remember { mutableStateOf(conectores.first()) }
 
-    var selectedOption by remember { mutableStateOf("TESLA") }
-    val conectores = listOf("Tipo 1 (SAE J1772)", "Tipo 2 (IEC 62196)", "GB/T 20234", "CHAdeMO", "TESLA", "Outros Carregadores")
+    //val conectores = listOf("Tipo 1 (SAE J1772)", "Tipo 2 (IEC 62196)", "GB/T 20234", "CHAdeMO", "TESLA", "Outros Carregadores")
 
     Scaffold(
         topBar = {
@@ -105,15 +107,16 @@ fun ProfileScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                                .background(BlueAppM),
+                                .padding(0.dp, 0.dp, 0.dp, 5.dp),
                             shape = RoundedCornerShape(corner = CornerSize(15.dp)),
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 3.dp,
                             )
                         ) {
                             Column (
-                                Modifier.background(BlueAppM).fillMaxSize()
+                                Modifier
+                                    .background(BlueAppM)
+                                    .fillMaxSize()
                             ){
                                 Text(
                                     text = "Modelo do Carro",
@@ -136,7 +139,7 @@ fun ProfileScreen(
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .size(40.dp)
-                                            .padding(2.dp)
+                                            .padding(3.dp)
                                             .clip(RoundedCornerShape(corner = CornerSize(10.dp))),
                                         alignment = Alignment.Center
                                     )
@@ -155,16 +158,16 @@ fun ProfileScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                                .background(BlueAppM),
+                                .padding(0.dp, 0.dp, 0.dp, 5.dp),
                             shape = RoundedCornerShape(corner = CornerSize(15.dp)),
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 3.dp,
                             )
                         ) {
                             Column (
-                                Modifier.background(BlueAppM).fillMaxSize()
-                                    .padding(horizontal = 10.dp)
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(BlueAppM)
                             ){
                                 Text(
                                     text = "Tipo de Conector",
@@ -175,36 +178,37 @@ fun ProfileScreen(
                                     modifier = Modifier.fillMaxWidth()
                                 )
                                 SmallSpacer()
-                                conectores.forEach{ conector ->
-                                    Row (
+                                conectores.forEach{ conect ->
+                                    Row(
                                         Modifier
                                             .fillMaxSize()
+                                            .padding(horizontal = 10.dp)
                                             .selectable(
-                                                selected = selectedOption == conector,
-                                                onClick = { selectedOption = conector },
+                                                selected = conect == selectedOption,
+                                                onClick = { selectedOption = conect },
                                                 role = Role.RadioButton
                                             ),
                                         verticalAlignment = Alignment.CenterVertically
-                                    ){
+                                    ) {
                                         RadioButton(
-                                            selected = selectedOption == conector,
-                                            onClick = { selectedOption = conector }
+                                            selected = conect == selectedOption,
+                                            onClick = { selectedOption = conect }
                                         )
                                         Text(
-                                            text = conector,
+                                            text = conect.name,
                                             color = BlueApp,
                                             fontWeight = FontWeight.Normal,
                                             fontFamily = sourceProFontFamily,
                                         )
-                                        Spacer(Modifier.weight(1f, true))
-                                        Image(painter = painterResource(
-                                            id = R.drawable.ic_info),
-                                            contentDescription = null,
-                                            contentScale = ContentScale.Crop,
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                                .clip(RoundedCornerShape(corner = CornerSize(10.dp))),
-                                            alignment = Alignment.Center
+                                        Spacer(
+                                            Modifier
+                                                .weight(1f, true)
+                                                .padding(horizontal = 10.dp)
+                                        )
+                                        ConectorItemList(conector = conect)
+                                        Spacer(
+                                            Modifier
+                                                .padding(end = 10.dp)
                                         )
                                     }
                                 }
@@ -226,6 +230,7 @@ fun ProfileScreen(
             navigateToSignInScreen()
         }
     )
+
 
 
 }
