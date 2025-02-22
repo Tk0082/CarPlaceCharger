@@ -144,6 +144,7 @@ fun StationListItem(station: Station) {
                                         putExtra("long", station.long)
                                     }
                                     context.startActivity(i)
+                                    expanded.value = !expanded.value
                                 },
                                 colors = ButtonDefaults.buttonColors(BlueAppD),
                                 shape = RoundedCornerShape(8.dp),

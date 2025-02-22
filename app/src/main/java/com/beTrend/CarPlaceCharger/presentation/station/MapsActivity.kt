@@ -1,17 +1,19 @@
-// Copyright 2024 - BeTrendMobileCreations CarPlace Charger
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+    Copyright 2024 CarPlaceCharger
 
+Licensed under the Apache License, Version 2.0 (the "License");
+
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package com.beTrend.CarPlaceCharger.presentation.station
 
 import android.annotation.SuppressLint
@@ -20,6 +22,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
@@ -33,6 +36,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,20 +51,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.beTrend.CarPlaceCharger.CarPlaceCharger.R
+import com.beTrend.CarPlaceCharger.presentation.station.network.DirectionsService
 import com.beTrend.CarPlaceCharger.ui.theme.BackCardD
 import com.beTrend.CarPlaceCharger.ui.theme.BackCardL
-import com.beTrend.CarPlaceCharger.ui.theme.BackCircle
 import com.beTrend.CarPlaceCharger.ui.theme.BlueApp
 import com.beTrend.CarPlaceCharger.ui.theme.Graffit
 import com.beTrend.CarPlaceCharger.ui.theme.sourceProFontFamily
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
@@ -69,6 +77,7 @@ import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -92,9 +101,7 @@ class MapsActivity : ComponentActivity(){
         }
     }
 
-
-    @SuppressLint("MissingPermission")
-    @OptIn(ExperimentalPermissionsApi::class)
+    @SuppressLint("MissingPermission", "UnrememberedMutableState")
     @Composable
     fun MapsScreen(name: String, desc: String, lat: Double, long: Double) {
 
@@ -102,6 +109,11 @@ class MapsActivity : ComponentActivity(){
         val context = LocalContext.current
         val uiSettings by remember { mutableStateOf(MapUiSettings(zoomControlsEnabled = true)) }
         val properties by remember { mutableStateOf(MapProperties(mapType = MapType.NORMAL)) }
+        var route by remember { mutableStateOf<List<LatLng>>(emptyList()) }
+        val viewModel: MapsViewModel = viewModel()
+        val key = "AIzaSyDQl09-TeRXqyPIg6h0G9LQYFPocyNIGsM"    //"AIzaSyCL19tX53SVo_P4YYdHgEZ0QhVmXAX79as"   AIzaSyDQl09-TeRXqyPIg6h0G9LQYFPocyNIGsM"
+        var repository: LocationRepository
+        val direct: DirectionsService
 
         // Cores para formar o Gradient do PopUp
         val colors = listOf(BackCardD, BackCardL)
@@ -113,54 +125,95 @@ class MapsActivity : ComponentActivity(){
         }
 
         // Latitude e Longitude do ponto(Y, X)
-        val posit = LatLng(lat, long)
+        val posit by remember { mutableStateOf(LatLng(lat, long)) }
 
         // Latitude e Longitude da Localização Atual
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-        val routePath = remember { mutableStateOf(listOf<LatLng>()) }  // Rota
-        var currentLocation = remember { mutableStateOf(LatLng(0.0,0.0))}
-        if (isLocationEnabled == false){
-            currentLocation = remember { mutableStateOf(LatLng(posit.latitude,posit.longitude)) }   //-13.150424, -51.819067)) }  // Padrão Centro do Brasil
-        } else {
-            LaunchedEffect(true) {
-                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                    if (location != null){
-                        currentLocation.value = LatLng(location.latitude, location.longitude)
+        var currentLocation by remember { mutableStateOf(LatLng(0.0,0.0))}
+        //var routePath by remember { mutableStateOf<List<LatLng>>(listOf()) }  // Rota
 
-                        // Obter a Rota
-                        val url = getDirectionsUrl(currentLocation.value, posit)
-                        scope.launch {
-                            routePath.value = fetchDirections(url)
-                        }
-                    } else {
-                        currentLocation.value
+        // Location Request
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000 // 10 seconds
+            fastestInterval = 5000 // 5 seconds
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+//        val url by remember {
+//            mutableStateOf( repository.findLocation(currentLocation.toString(), posit.toString(),key) )
+//        }
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationRes: LocationResult) {
+                super.onLocationResult(locationRes)
+                locationRes.lastLocation?.let { result ->
+                    currentLocation = LatLng(result.latitude, result.longitude)
+//                    val url = getDirectionsUrl(currentLocation, posit)
+//                    scope.launch {
+//                        routePath = fetchDirections(url)
+//                    }
+                    scope.launch {
+                        val url = this@MapsActivity.findRoute(currentLocation.toString(), posit.toString(), key)
+                        fetchDirections(url.toString())
                     }
                 }
             }
         }
 
-        /*val boundsBuilder = LatLngBounds.builder()
-        val coordinates = listOf(
-            LatLng(currentLocation.value.latitude, currentLocation.value.longitude),
-            LatLng(posit.latitude, posit.longitude)
-        )
-        for (coordinate in coordinates) {
-            boundsBuilder.include(coordinate)
+        LaunchedEffect(isLocationEnabled) {
+            if (isLocationEnabled) {
+                try {
+                    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                        location?.let {
+                            currentLocation = LatLng(it.latitude, it.longitude)
+
+                            // Obter a Rota (user_local - destino)
+//                            val url = this@MapsActivity.getDirectionsUrl(currentLocation, posit)
+//                            scope.launch {
+//                                routePath = fetchDirections(url)
+//                            }
+
+                            scope.launch {
+                                val url = this@MapsActivity.findRoute(currentLocation.toString(), posit.toString(), key)
+                                fetchDirections(url.toString())
+                            }
+                        }
+                    }
+                } catch (e: SecurityException){
+                    Log.e("MapsActivity", "Problema de permissão:\n ${e.message}")
+                }
+            } else {
+                currentLocation = LatLng(
+                            posit.latitude,
+                            posit.longitude
+                        )
+            }
         }
 
-        val bounds = boundsBuilder.build()
+        val bounds = LatLngBounds.builder().apply {
+            include(currentLocation)
+            include(posit)
+        }.build()
 
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(currentLocation.value,10f)
+            position = CameraPosition.fromLatLngZoom(currentLocation,18f)
         }
 
-        LaunchedEffect(true) {
+        LaunchedEffect(currentLocation, posit) {
             cameraPositionState.move(
-                update = CameraUpdateFactory.newLatLngBounds(bounds, 100)
+                CameraUpdateFactory.newLatLngBounds(bounds, 100)
             )
-        }*/
-        val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(currentLocation.value,15f)
+        }
+
+        DisposableEffect(Unit) {
+            onDispose {
+                fusedLocationClient.removeLocationUpdates(locationCallback)
+            }
+        }
+
+        LaunchedEffect(Unit) {
+            viewModel.getRoute(currentLocation.toString(), posit.toString()){ points ->
+                route = decodePoly(points)
+            }
         }
 
         GoogleMap(
@@ -169,16 +222,9 @@ class MapsActivity : ComponentActivity(){
             properties = properties,
             uiSettings = uiSettings,
         ) {
-            Circle(
-                center = currentLocation.value,
-                radius = 500.0,
-                strokeWidth = 2f,
-                strokeColor = BackCardD,
-                fillColor = BackCircle
-            )
-            if (isLocationEnabled != false) {
+            if (isLocationEnabled) {
                 MarkerInfoWindow(
-                    state = MarkerState(position = currentLocation.value),
+                    state = MarkerState(position = currentLocation),
                     draggable = false,
                     icon = BitmapDescriptorFactory.fromResource(R.mipmap.ic_pin_1),
                     zIndex = 1f
@@ -243,18 +289,26 @@ class MapsActivity : ComponentActivity(){
                             .padding(20.dp, 10.dp)
                     ) {
                         Text(name, fontWeight = FontWeight.Bold, color = BlueApp, fontFamily = sourceProFontFamily)
-                        Text(desc, fontWeight = FontWeight.Bold, color = BlueApp, fontFamily = sourceProFontFamily)
+                        Text(desc, fontWeight = FontWeight.Bold, color = Graffit, fontFamily = sourceProFontFamily)
                     }
                 }
             }
-            Polyline(
-                points = routePath.value,
-                color = BlueApp
-            )
+            if (route.isNotEmpty()) {
+                Polyline(
+                    points = route,
+                    color = BlueApp,
+                    zIndex = 1f
+                )
+            } else {
+                Polyline(
+                    points = listOf(currentLocation, posit),
+                    color = BlueApp
+                )
+            }
         }
     }
 
-    fun isLocationEnabled(context: Context): Boolean{
+    private fun isLocationEnabled(context: Context): Boolean{
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
@@ -270,36 +324,157 @@ class MapsActivity : ComponentActivity(){
         return this
     }
 
-    private fun getDirectionsUrl(origin: LatLng, dest: LatLng): String {
-        val strOrigin = "origin=${origin.latitude},${origin.longitude}"
-        val strDest = "destinaton=${dest.latitude},${dest.longitude}"
-        val sensor = "sensor=false"
-        val key = "key=AIzaSyDQl09-TeRXqyPIg6h0G9LQYFPocyNIGsM"
-        val parameters = "$strOrigin&$strDest&$sensor&$key"
-        return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
+//    private suspend fun getDirectionsUrl(origin: LatLng, dest: LatLng): String {
+//
+//        val client: HttpClient
+//        val strOrigin = "${origin.latitude},${origin.longitude}"
+//        val strDest = "${dest.latitude},${dest.longitude}"
+//        val key = "key=AIzaSyDQl09-TeRXqyPIg6h0G9LQYFPocyNIGsM"
+//        var address: DirectionsService
+//        var path: RetrofitInstance = address?.getDirections(strOrigin,strDest,key)
+//        //val parameters = "$strOrigin&$strDest&$key"
+//        //return "https://maps.googleapis.com/maps/api/directions/json?${strOrigin}&${strDest}&${key}"
+//    }
+
+    private suspend fun findRoute(origin: String, dest: String, key: String): DirectionsResponse {
+        val client: HttpClient
+        val adrress: DirectionsService
+        return findRoute(origin, dest, key)
     }
 
-    private suspend fun fetchDirections(url: String): List<LatLng>{
-        val client = OkHttpClient()
-        val request = Request.Builder().url(url).build()
-        val response = client.newCall(request).execute()
-        val data = response.body?.string() ?: return  emptyList()
-
-        val jsonObject = JSONObject(data)
-        val routes = jsonObject.getJSONArray("routes")
-        val legs = routes.getJSONObject(0).getJSONArray("legs")
-        val steps = legs.getJSONObject(0).getJSONArray("steps")
-
-        val path = mutableListOf<LatLng>()
-
-        for (i in 0 until steps.length()){
-            val step = steps.getJSONObject(i)
-            val startLocation = step.getJSONObject("start_location")
-            path.add(LatLng(startLocation.getDouble("lat"), startLocation.getDouble("lng")))
-            val endLocation = step.getJSONObject("end_location")
-            path.add(LatLng(endLocation.getDouble("lat"), endLocation.getDouble("lng")))
+    private fun fetchDirections(url: String): List<LatLng>{
+        return try {
+            val client = OkHttpClient()
+            val request = Request.Builder().url(url).build()
+            val response = client.newCall(request).execute()
+            if (!response.isSuccessful) {
+                Log.e("MapsActivity", "Falha ao buscar rotas: \n${response.message}")
+                return emptyList()
+            }
+            val data = response.body?.string() ?: return emptyList()
+            val jsonObject = JSONObject(data)
+            val routes = jsonObject.getJSONArray("routes")
+            if (routes.length() == 0) {
+                Log.e("MapsActivity", "Nenhuma rota encontrada.")
+                return emptyList()
+            }
+            val overviewpolyline = routes.getJSONObject(0).getJSONObject("overview_polyline").getString("points")
+            decodePoly(overviewpolyline)
+//            val legs = routes.getJSONObject(0).getJSONArray("legs")
+//            val steps = legs.getJSONObject(0).getJSONArray("steps")
+//
+//            val path = mutableListOf<LatLng>()
+//            for (i in 0 until steps.length()) {
+//                val step = steps.getJSONObject(i)
+//                val polyline = step.getJSONObject("polyline").getString("points")
+//                //val decodePath = decodePolyline(polyline)
+//                val startLocation = step.getJSONObject("start_location")
+//                path.add(LatLng(startLocation.getDouble("lat"), startLocation.getDouble("lng")))
+//                val endLocation = step.getJSONObject("end_location")
+//                path.add(LatLng(endLocation.getDouble("lat"), endLocation.getDouble("lng")))
+//                path.addAll(decodePolyline(polyline))
+//            }
+//            path
+        } catch (e: Exception){
+            Log.e("MapsActivity", "Exceção ao buscar rotas:\n", e)
+            emptyList()
         }
-        return path
+    }
+//
+//    private fun decodePolyline(encoded: String): List<LatLng> {
+//        val poly = mutableListOf<LatLng>()
+//        var index = 0
+//        val len = encoded.length
+//        var lat = 0
+//        var lng = 0
+//
+//        while (index < len){
+//            var b: Int
+//            var shift = 0
+//            var res = 0
+//            do {
+//                b = encoded[index++].code -63
+//                res = res or ((b and 0x1f) shl shift)
+//                shift += 5
+//            } while (b >= 0x20)
+//            val dlat = if (res and 1 != 0)(res ushr 1).inv() else res ushr 1
+//            lat += dlat
+//
+//            shift = 0
+//            res = 0
+//            do {
+//                b = encoded[index++].code -63
+//                res = res or ((b and 0x1f) shl shift)
+//                shift += 5
+//            } while (b >= 0x20)
+//            val dlng = if (res and 1 != 0) (res ushr 1).inv() else res ushr 1
+//            lng += dlng
+//
+//            val pointLat = (lat / 1E5).toDouble()
+//            val pointLng = (lng / 1E5).toDouble()
+//            poly.add(LatLng(pointLat, pointLng))
+//        }
+//        return poly
+//    }
+
+//    private val retrofit = Retrofit.Builder()
+//        .baseUrl("https://maps.googleapis.com/maps/api/json?")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build()
+//
+//    private val api = retrofit.create(DirectionsService::class.java)
+//
+//    suspend fun getRoute(origin: LatLng, destination: LatLng, onResult: (List<LatLng>) -> Unit){
+//        try {
+//            val response = api.getDirections(origin.toString(), destination.toString(), apiKey).execute()
+//            when {
+//                response.isSuccessful -> {
+//                    response.body()?.let { directionsResponse ->
+//                        val polyline = directionsResponse.routes.firstOrNull()?.overviewpoly?.points
+//                        polyline?.let {
+//                            val decodePath = decodePoly(it)
+//                            onResult(decodePath)
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (e: Exception){}
+//    }
+
+    private fun decodePoly(encoded: String): List<LatLng>{
+        val poly = ArrayList<LatLng>()
+        var index = 0
+        val len = encoded.length
+        var lat = 0
+        var long = 0
+
+        while (index < len){
+            var b: Int
+            var shift = 0
+            var result = 0
+            do{
+                b = encoded[index++].code - 63
+                result = result or (b and 0x1f shl shift)
+                shift += 5
+            } while (b >= 0x20)
+
+            val dlat = if (result and 1 != 0) -(result shr 1) else result shr 1
+            lat += dlat
+
+            shift = 0
+            result = 0
+            do{
+                b = encoded[index++].code - 63
+                result = result or (b and 0x1f shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlng = if (result and 1 != 0) -(result shr 1) else result shr 1
+            long += dlng
+
+            val p = LatLng((lat.toDouble() / 1E5), (long.toDouble() /1E5))
+            poly.add(p)
+        }
+        return poly
     }
 
 }

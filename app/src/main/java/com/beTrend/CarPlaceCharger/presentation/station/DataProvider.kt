@@ -5,6 +5,14 @@ import com.beTrend.CarPlaceCharger.CarPlaceCharger.R
 object DataProvider {
     val stationList = listOf(
         Station(
+            id = 0,
+            img = R.drawable.banner,
+            latd = 37.3695185,
+            long = -121.8254631,
+            name = "Maggy Salova",
+            desc = "10671 Porter Ln, San Jose, CA 95127, Estados Unidos"
+        ),
+        Station(
             id = 1,
             img = R.drawable.banner,
             latd = -16.7415469,
